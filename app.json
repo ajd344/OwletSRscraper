@@ -1,0 +1,8 @@
+{
+  "name": "OWLET SR",
+  "description": "OWLET SR Scraper",
+  "repository": "https://github.com/RainbowLegend/OwletSRscraper",
+  "env": {
+    }
+  }
+}
