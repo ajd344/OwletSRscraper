@@ -34,4 +34,6 @@ for name in btags:
             ret = ""
         finished[name[0]] = ret
         sheet.update_cell(cell.row, 5, ret)
+        
+timer.sleep(252900)
 
