@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import re
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import timer
 
 
 while(1):
