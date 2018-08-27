@@ -13,6 +13,8 @@ while(1):
     client = gspread.authorize(creds)
 
     sheet = client.open("OWLET Master Spreadsheet").worksheet("Map Count Code")
+    
+    column = 6
 
     listOfHashes = sheet.get_all_values()
 
@@ -28,7 +30,7 @@ while(1):
             cell = sheet.find(tag)
             tag = tag.replace('#', '-')
             tag = tag.replace(" ", "")
-            player = 'https://playoverwatch.com/en-us/career/pc/' + tag
+            player = f'https://playoverwatch.com/en-us/career/pc/{tag}'
             try:
                 page = requests.get(player)
                 soup = BeautifulSoup(page.content, 'html.parser')
@@ -36,5 +38,6 @@ while(1):
             except:
                 ret = ""
             finished[name[0]] = ret
-            sheet.update_cell(cell.row, 5, ret)
-    timer.sleep(252900)
+            sheet.update_cell(cell.row, column, ret)
+        column = column + 1
+        timer.sleep(252900)
