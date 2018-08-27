@@ -13,8 +13,9 @@ while(1):
     client = gspread.authorize(creds)
 
     sheet = client.open("OWLET Master Spreadsheet").worksheet("Map Count Code")
+    botCode = client.open("OWLET Master Spreadsheet").worksheet("Bot Code")
     
-    column = 6
+    column = int(botCode.cell(2, 2).value)
 
     listOfHashes = sheet.get_all_values()
 
@@ -40,4 +41,5 @@ while(1):
             finished[name[0]] = ret
             sheet.update_cell(cell.row, column, ret)
         column = column + 1
+        botCode.update_cell(2, 2, str(column))
         timer.sleep(252900)
