@@ -40,30 +40,28 @@ while 1:
         if len(name) > 0:
             tag = name[0]
             print(tag)
+            cell = sheet.find(tag)
+            tag = tag.replace('#', '-')
+            tag = tag.replace(" ", "")
+            player = f'https://playoverwatch.com/en-us/career/pc/{tag}'
             try:
-                cell = sheet.find(tag)
-                tag = tag.replace('#', '-')
-                tag = tag.replace(" ", "")
-                player = f'https://playoverwatch.com/en-us/career/pc/{tag}'
-                try:
-                    page = requests.get(player)
-                    soup = BeautifulSoup(page.content, 'html.parser')
-                    ret = soup.find(class_="competitive-rank").get_text()
+                page = requests.get(player)
+                soup = BeautifulSoup(page.content, 'html.parser')
+                ret = soup.find(class_="competitive-rank").get_text()
 
+            except:
+                try:
+                    ret = soup.find(class_='header-masthead').get_text()
+                    newTag = tag.split("-")
+                    if ret.lower() == newTag[0].lower():
+                        ret = 'ND'
                 except:
-                    try:
-                        ret = soup.find(class_='header-masthead').get_text()
-                        newTag = tag.split("-")
-                        if ret.lower() == newTag[0].lower():
-                            ret = 'ND'
-                    except:
-                        ret = ' '
-                finished[name[0]] = ret
-                if cell.row == 2:
-                    pass
-                else:
-                    sheet.update_cell(cell.row, column, ret)
-            except gspread.exceptions.CellNotFound:
+                    ret = ' '
+            finished[name[0]] = ret
+            if cell.row == 2:
+                pass
+            else:
+                sheet.update_cell(cell.row, column, ret)
     sheet.update_cell(2, column, f'SR@{str(datetime.date.today())}')
     column = column + 1
     sheet.update_cell(1, 1, str(column))
